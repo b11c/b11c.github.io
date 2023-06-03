@@ -16,12 +16,12 @@
   <meta name="author" content="b11c">
   <meta name="keywords" content="">
   
-    <meta name="description" content="——————————————TOP：APT级隐藏搭建CobaltStrike4.4教程——Nginx反向代理+C2-Profile+CDN—————————————————— 声明：         分享的内容仅用于技术讨论，仅供安全研究与学习之用，如用于其他用途，由使用者承担全部法律及连带责任，如因此产生的一切不良后果与文章作者和本博客不关，文章作者不承担全部法律及连带责任。  前言基于渗透的">
+    <meta name="description" content="———————————TOP：APT级隐藏搭建CobaltStrike4.4教程——Nginx反向代理+C2-Profile+CDN**————————————— 声明：         分享的内容仅用于技术讨论，仅供安全研究与学习之用，如用于其他用途，由使用者承担全部法律及连带责任，如因此产生的一切不良后果与文章作者和本博客不关，文章作者不承担全部法律及连带责任。  前言基于渗透的角度，CS是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="APT级隐藏搭建CS4.4教程——Nginx反向代理+C2-Profile+CDN">
 <meta property="og:url" content="https://b11c.github.io/2023/06/04/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-C2-Profile-CDN/index.html">
 <meta property="og:site_name" content="b11c">
-<meta property="og:description" content="——————————————TOP：APT级隐藏搭建CobaltStrike4.4教程——Nginx反向代理+C2-Profile+CDN—————————————————— 声明：         分享的内容仅用于技术讨论，仅供安全研究与学习之用，如用于其他用途，由使用者承担全部法律及连带责任，如因此产生的一切不良后果与文章作者和本博客不关，文章作者不承担全部法律及连带责任。  前言基于渗透的">
+<meta property="og:description" content="———————————TOP：APT级隐藏搭建CobaltStrike4.4教程——Nginx反向代理+C2-Profile+CDN**————————————— 声明：         分享的内容仅用于技术讨论，仅供安全研究与学习之用，如用于其他用途，由使用者承担全部法律及连带责任，如因此产生的一切不良后果与文章作者和本博客不关，文章作者不承担全部法律及连带责任。  前言基于渗透的角度，CS是">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://b11c.github.io/2023/06/04/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-C2-Profile-CDN/1.png">
 <meta property="og:image" content="https://b11c.github.io/2023/06/04/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-C2-Profile-CDN/2.png">
@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://b11c.github.io/2023/06/04/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-C2-Profile-CDN/15.png">
 <meta property="og:image" content="https://b11c.github.io/2023/06/04/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-C2-Profile-CDN/16.png">
 <meta property="article:published_time" content="2023-06-03T17:50:35.000Z">
-<meta property="article:modified_time" content="2023-06-03T19:14:39.241Z">
+<meta property="article:modified_time" content="2023-06-03T19:16:42.079Z">
 <meta property="article:author" content="b11c">
 <meta property="article:tag" content="内网">
 <meta name="twitter:card" content="summary_large_image">
@@ -334,7 +334,7 @@
             
               <div class="markdown-body">
                 
-                <p> ——————————————<strong>TOP：APT级隐藏搭建CobaltStrike4.4教程——Nginx反向代理+C2-Profile+CDN</strong>——————————————————</p>
+                <p> ———————————TOP：APT级隐藏搭建CobaltStrike4.4教程——Nginx反向代理+C2-Profile+CDN**—————————————</p>
 <p><strong>声明：</strong><br>         <strong>分享的内容仅用于技术讨论，仅供安全研究与学习之用，如用于其他用途，由使用者承担全部法律及连带责任，如因此产生的一切不良后果与文章作者和本博客不关，文章作者不承担全部法律及连带责任。</strong></p>
 <hr>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>基于渗透的角度，CS是一把利剑，由于其广泛的使用，特征很明显，隐藏c2特征很必要。APT级搭建：使用nginx反向代理+C2-Profile+CDN。</p>
