@@ -1,0 +1,1149 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="b11c">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="内网渗透中常用命令0X00 目标主机信息收集内网渗透的本质——信息收集，信息收集做的越全面拿下目标内网越快。 0X01 目标信息—— 个人PC （非域内用户）12操作系统，当前用户权限，内网ip段，杀毒软件，端口开放情况，系统打的补丁，网络状况，共享文件夹等；如果是域内的主机的话，操作系统、补丁、运行的服务、杀软等一般是域管批量用脚本安装的。   查看ipconfig:   ipconfig &amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网渗透中常用命令">
+<meta property="og:url" content="https://b11c.github.io/2023/06/12/%E5%86%85%E7%BD%91%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="b11c">
+<meta property="og:description" content="内网渗透中常用命令0X00 目标主机信息收集内网渗透的本质——信息收集，信息收集做的越全面拿下目标内网越快。 0X01 目标信息—— 个人PC （非域内用户）12操作系统，当前用户权限，内网ip段，杀毒软件，端口开放情况，系统打的补丁，网络状况，共享文件夹等；如果是域内的主机的话，操作系统、补丁、运行的服务、杀软等一般是域管批量用脚本安装的。   查看ipconfig:   ipconfig &amp;#">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-06-12T15:50:20.000Z">
+<meta property="article:modified_time" content="2023-06-16T06:54:43.382Z">
+<meta property="article:author" content="b11c">
+<meta property="article:tag" content="内网">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>内网渗透中常用命令 - b11c</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"b11c.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>b11c</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="内网渗透中常用命令"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        b11c
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-12 23:50" pubdate>
+          June 12, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span>次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">内网渗透中常用命令</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="内网渗透中常用命令"><a href="#内网渗透中常用命令" class="headerlink" title="内网渗透中常用命令"></a>内网渗透中常用命令</h1><h2 id="0X00-目标主机信息收集"><a href="#0X00-目标主机信息收集" class="headerlink" title="0X00 目标主机信息收集"></a>0X00 目标主机信息收集</h2><p><strong>内网渗透的本质——信息收集</strong>，信息收集做的越全面拿下目标内网越快。</p>
+<h2 id="0X01-目标信息——-个人PC-（非域内用户）"><a href="#0X01-目标信息——-个人PC-（非域内用户）" class="headerlink" title="0X01 目标信息—— 个人PC （非域内用户）"></a>0X01 目标信息—— 个人PC （非域内用户）</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs armasm">操作系统，当前用户权限，内网<span class="hljs-built_in">ip</span>段，杀毒软件，端口开放情况，系统打的补丁，网络状况，共享文件夹等；<br>如果是域内的主机的话，操作系统、补丁、运行的服务、杀软等一般是域管批量用脚本安装的。<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查看ipconfig:</li>
+</ul>
+<blockquote>
+<p>ipconfig &#x2F;all</p>
+</blockquote>
+<ul>
+<li>查询是否存在域内，操作系统及版本信息，补丁信息等:</li>
+</ul>
+<blockquote>
+<p>systeminfo</p>
+</blockquote>
+<ul>
+<li>查看存在杀软:</li>
+</ul>
+<blockquote>
+<p>tasklist  &#x2F;svc   或<br>wmic process list brief<br>在线识别杀软：<a target="_blank" rel="noopener" href="https://www.ddosi.org/av/1.php">雨苁</a></p>
+</blockquote>
+<ul>
+<li>查询系统体系架构：</li>
+</ul>
+<blockquote>
+<p>echo %PROCESSOR_ARCHITECTURE%</p>
+</blockquote>
+<ul>
+<li>查询已安装的软件及版本信息：</li>
+</ul>
+<blockquote>
+<p>wmic product get name,version</p>
+</blockquote>
+<ul>
+<li>查询本机服务：</li>
+</ul>
+<blockquote>
+<p>wmic service list brief</p>
+</blockquote>
+<ul>
+<li>查看计划任务：</li>
+</ul>
+<blockquote>
+<p>schtasks &#x2F;query &#x2F;fo LIST &#x2F;v</p>
+</blockquote>
+<ul>
+<li>查看主机的开机时间：</li>
+</ul>
+<blockquote>
+<p>net statistics workstation</p>
+</blockquote>
+<ul>
+<li>查看用户列表：</li>
+</ul>
+<blockquote>
+<p>net user</p>
+</blockquote>
+<ul>
+<li>查看本地管理员信息：</li>
+</ul>
+<blockquote>
+<p>net localgroup administrators</p>
+</blockquote>
+<ul>
+<li>查看当前在线的用户：</li>
+</ul>
+<blockquote>
+<p>query user || qwinsta</p>
+</blockquote>
+<ul>
+<li>查看本地计算机与所连接客户端之间的会话：(管理员权限下运行)</li>
+</ul>
+<blockquote>
+<p>net session</p>
+<p>非管理员权限：System error 5 has occurred</p>
+</blockquote>
+<ul>
+<li>查看端口：</li>
+</ul>
+<blockquote>
+<p>netstat -ano</p>
+</blockquote>
+<ul>
+<li>查看补丁信息：</li>
+</ul>
+<blockquote>
+<p>systeminfo<br>wmic qfe get caption,description,hotfixid,installedon</p>
+</blockquote>
+<ul>
+<li>查看本机共享列表：</li>
+</ul>
+<blockquote>
+<p>net share</p>
+<p>wmic share get name,path,status</p>
+</blockquote>
+<ul>
+<li>查询路由表及所有可用的ARP缓存表：</li>
+</ul>
+<blockquote>
+<p>route print</p>
+<p>arp -a</p>
+</blockquote>
+<p> <strong>查看防火墙相关：</strong></p>
+<ul>
+<li>查看防火墙配置：</li>
+</ul>
+<blockquote>
+<p>netsh firewall show config</p>
+</blockquote>
+<ul>
+<li>关闭防火墙：(administrator权限)</li>
+</ul>
+<blockquote>
+<p>winserver 2003之前： <code>netsh firewall set opmode disable</code><br>winserver 2003之后： <code>netsh advfirewall set allprofiles state off</code><br>一般来说不要操作防火墙的开关，风险极大，只需要查看配置即可</p>
+</blockquote>
+<ul>
+<li>查看代理：</li>
+</ul>
+<blockquote>
+<p>reg query “HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings”</p>
+</blockquote>
+<p>查询远程连接服务：</p>
+<blockquote>
+<p>reg query “HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlset\Control\Terminal Server\WinStations\RDP-Tcp” &#x2F;v PortNumber</p>
+<p>结果：</p>
+<p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlset\Control\Terminal Server\WinStations\RDP-Tcp<br> PortNumber    REG_DWORD    0xd3d</p>
+<p>分析：连接端口为16进制数0xd3d，转换为10进制就是3389</p>
+</blockquote>
+<h2 id="0X02-目标信息——-域内PC-（域内用户）"><a href="#0X02-目标信息——-域内PC-（域内用户）" class="headerlink" title="0X02 目标信息—— 域内PC （域内用户）"></a>0X02 目标信息—— 域内PC （域内用户）</h2><ul>
+<li>查看当前权限：</li>
+</ul>
+<blockquote>
+<p>whoami</p>
+</blockquote>
+<ul>
+<li>获取域id：</li>
+</ul>
+<blockquote>
+<p>whoami &#x2F;all</p>
+</blockquote>
+<ul>
+<li>获取指定用户的详细信息：</li>
+</ul>
+<blockquote>
+<p>net user  XX &#x2F;domain</p>
+</blockquote>
+<ul>
+<li>判断是否存在域:</li>
+</ul>
+<blockquote>
+<p>ipconfig &#x2F;all               &#x2F;&#x2F;即可做出判断——查看 ”主DNS后缀：god.org“</p>
+<p>systeminfo               &#x2F;&#x2F;可以做出判断—— 查看 ”Domain:  god.org“</p>
+</blockquote>
+<ul>
+<li>发现域名后，利用nslookup命令直接解析域名的ip，借此来判断dns服务器与域控是否在同一主机上:</li>
+</ul>
+<blockquote>
+<p>nslookup  god.org</p>
+</blockquote>
+<ul>
+<li>查询当前的登录域与用户信息：</li>
+</ul>
+<blockquote>
+<p>net config workstation</p>
+</blockquote>
+<ul>
+<li>判断主域：</li>
+</ul>
+<blockquote>
+<p>net time &#x2F;domain</p>
+<p>结果：</p>
+<p>（1）若是此命令在显示域处显示WORKGROUP，则不存在域；</p>
+<p>（2）若是报错：发生系统错误5，则存在域，但该用户不是域用户。</p>
+</blockquote>
+<ul>
+<li>探测域内存活主机</li>
+</ul>
+<blockquote>
+<p>利用ICMP进行探测：for &#x2F;L %I in (1,1,254) DO @ping -2 1 -n 1 192.168.52.%I | findstr “TTL&#x3D;”</p>
+<p>Ladon 192.168.1.0&#x2F;24</p>
+</blockquote>
+<ul>
+<li>扫描端口: (K8Tolls-Ladon)</li>
+</ul>
+<blockquote>
+<p>Ladon 192.168.1.8&#x2F;24 PortScan</p>
+</blockquote>
+<p>​                                                                                              <strong>内网扫描常见端口大全</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">端口号</th>
+<th align="left">端口说明</th>
+<th align="left">攻击技巧</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">21&#x2F;22&#x2F;69</td>
+<td align="left">ftp&#x2F;tftp</td>
+<td align="left">文件传输协议	允许匿名上传、下载、爆破、嗅探、溢出和后门</td>
+</tr>
+<tr>
+<td align="left">22</td>
+<td align="left">ssh</td>
+<td align="left">远程连接	爆破OpenSSH；28个退格</td>
+</tr>
+<tr>
+<td align="left">23</td>
+<td align="left">telnet</td>
+<td align="left">远程连接	爆破、嗅探、弱口令</td>
+</tr>
+<tr>
+<td align="left">25</td>
+<td align="left">smtp</td>
+<td align="left">邮件服务	邮件伪造</td>
+</tr>
+<tr>
+<td align="left">53</td>
+<td align="left">DNS</td>
+<td align="left">域名系统	DNS区域传输\DNS劫持\DNS缓存投毒\DNS欺骗\利用DNS隧道技术刺透防火墙</td>
+</tr>
+<tr>
+<td align="left">67&#x2F;68</td>
+<td align="left">dhcp</td>
+<td align="left">劫持、欺骗</td>
+</tr>
+<tr>
+<td align="left">80&#x2F;443&#x2F;8080</td>
+<td align="left">常见web服务端口</td>
+<td align="left">web攻击、爆破、对应服务器版本漏洞</td>
+</tr>
+<tr>
+<td align="left">110</td>
+<td align="left">pop3</td>
+<td align="left">爆破、嗅探</td>
+</tr>
+<tr>
+<td align="left">139</td>
+<td align="left">samba</td>
+<td align="left">爆破、未授权访问、远程代码执行</td>
+</tr>
+<tr>
+<td align="left">143</td>
+<td align="left">imap</td>
+<td align="left">爆破</td>
+</tr>
+<tr>
+<td align="left">161</td>
+<td align="left">snmp</td>
+<td align="left">爆破</td>
+</tr>
+<tr>
+<td align="left">389</td>
+<td align="left">ldap</td>
+<td align="left">目录访问协议	注入攻击\未授权访问，弱口令</td>
+</tr>
+<tr>
+<td align="left">512&#x2F;513&#x2F;514</td>
+<td align="left">linux rexec</td>
+<td align="left">直接使用rlogin、爆破</td>
+</tr>
+<tr>
+<td align="left">873</td>
+<td align="left">rsync</td>
+<td align="left">未授权访问、文件上传</td>
+</tr>
+<tr>
+<td align="left">1080</td>
+<td align="left">socket</td>
+<td align="left">爆破：进行内网渗透</td>
+</tr>
+<tr>
+<td align="left">1352</td>
+<td align="left">lotus Domino邮件服务</td>
+<td align="left">爆破：弱口令、信息泄漏：源代码</td>
+</tr>
+<tr>
+<td align="left">1433</td>
+<td align="left">mssql</td>
+<td align="left">爆破：使用系统用户登录、注入攻击、SA弱口令</td>
+</tr>
+<tr>
+<td align="left">1521</td>
+<td align="left">oracle</td>
+<td align="left">爆破：TNS\注入攻击\反弹shell</td>
+</tr>
+<tr>
+<td align="left">2049</td>
+<td align="left">nfs</td>
+<td align="left">配置不当</td>
+</tr>
+<tr>
+<td align="left">2181</td>
+<td align="left">zookeeper</td>
+<td align="left">未授权访问</td>
+</tr>
+<tr>
+<td align="left">3306</td>
+<td align="left">mysql</td>
+<td align="left">爆破、拒绝服务、注入、提权</td>
+</tr>
+<tr>
+<td align="left">3389</td>
+<td align="left">rdp</td>
+<td align="left">爆破、Shift后门</td>
+</tr>
+<tr>
+<td align="left">3690</td>
+<td align="left">SVN服务</td>
+<td align="left">SVN泄露、未授权访问</td>
+</tr>
+<tr>
+<td align="left">4848</td>
+<td align="left">glassfish</td>
+<td align="left">爆破：控制台弱口令、认证绕过</td>
+</tr>
+<tr>
+<td align="left">5000</td>
+<td align="left">sybase&#x2F;DB2</td>
+<td align="left">爆破\注入</td>
+</tr>
+<tr>
+<td align="left">5432</td>
+<td align="left">postgresql</td>
+<td align="left">缓冲区溢出、注入攻击\爆破：弱口令</td>
+</tr>
+<tr>
+<td align="left">5632</td>
+<td align="left">pcanywhere</td>
+<td align="left">拒绝服务、代码执行，抓取密码</td>
+</tr>
+<tr>
+<td align="left">5900</td>
+<td align="left">vnc</td>
+<td align="left">爆破：弱口令、认证绕过</td>
+</tr>
+<tr>
+<td align="left">6379</td>
+<td align="left">redis</td>
+<td align="left">未授权访问\爆破：弱口令</td>
+</tr>
+<tr>
+<td align="left">7001&#x2F;7002</td>
+<td align="left">weblogic</td>
+<td align="left">Java反序列化\控制台弱口令\控制台部署webshell</td>
+</tr>
+<tr>
+<td align="left">8069</td>
+<td align="left">zabbix</td>
+<td align="left">远程命令执行——SQL注入</td>
+</tr>
+<tr>
+<td align="left">8080&#x2F;8089</td>
+<td align="left">JBoss&#x2F;Resin&#x2F;Jetty&#x2F;Jenkins</td>
+<td align="left">反序列化、控制台弱口令</td>
+</tr>
+<tr>
+<td align="left">9090</td>
+<td align="left">websphere控制台</td>
+<td align="left">爆破：控制台弱口令、Java反序列</td>
+</tr>
+<tr>
+<td align="left">9200&#x2F;9300</td>
+<td align="left">elasticsearch</td>
+<td align="left">远程代码执行</td>
+</tr>
+<tr>
+<td align="left">10000</td>
+<td align="left">webmin控制面板</td>
+<td align="left">弱口令</td>
+</tr>
+<tr>
+<td align="left">11211</td>
+<td align="left">memcacache</td>
+<td align="left">未授权访问</td>
+</tr>
+<tr>
+<td align="left">27017&#x2F;27018</td>
+<td align="left">mongodb</td>
+<td align="left">爆破\未授权访问</td>
+</tr>
+<tr>
+<td align="left">50000</td>
+<td align="left">SAP Management Console</td>
+<td align="left">远程执行</td>
+</tr>
+</tbody></table>
+<h2 id="0X03-获取域内的基础信息"><a href="#0X03-获取域内的基础信息" class="headerlink" title="0X03  获取域内的基础信息"></a>0X03  获取域内的基础信息</h2><ul>
+<li>查询域：</li>
+</ul>
+<blockquote>
+<p>net view &#x2F;domain</p>
+</blockquote>
+<ul>
+<li>查询域内所有计算机：</li>
+</ul>
+<blockquote>
+<p>net view &#x2F;domain:域名</p>
+</blockquote>
+<ul>
+<li>查询域内所有用户组：</li>
+</ul>
+<blockquote>
+<p>net group &#x2F;domain</p>
+</blockquote>
+<ul>
+<li>查看所有域成员计算机列表：</li>
+</ul>
+<blockquote>
+<p>net group “domain computers” &#x2F;domain</p>
+</blockquote>
+<ul>
+<li>获取域密码信息：</li>
+</ul>
+<blockquote>
+<p>net accounts &#x2F;domain</p>
+</blockquote>
+<ul>
+<li>获取域信任信息：</li>
+</ul>
+<blockquote>
+<p>nltest &#x2F;domain_trusts</p>
+</blockquote>
+<h5 id="寻找域控"><a href="#寻找域控" class="headerlink" title="寻找域控"></a>寻找域控</h5><ul>
+<li>查看域控机器名：</li>
+</ul>
+<blockquote>
+<p>nltest &#x2F;DCLIST:域名</p>
+</blockquote>
+<ul>
+<li>查看域控主机名：</li>
+</ul>
+<blockquote>
+<p>nslookup -type&#x3D;SRV _ladp._tcp</p>
+</blockquote>
+<ul>
+<li>查看域控制器组：</li>
+</ul>
+<blockquote>
+<p>net group “Domain Controllers” &#x2F;domain，netdom query pdc</p>
+<p>在大型企业中，域控制器组中的用户会不止一个，这是为了保证主域控故障时可以切换到备用域控制器</p>
+</blockquote>
+<h5 id="获取域内用户和管理员信息"><a href="#获取域内用户和管理员信息" class="headerlink" title="获取域内用户和管理员信息"></a>获取域内用户和管理员信息</h5><ul>
+<li>查询所有域用户列表：</li>
+</ul>
+<blockquote>
+<p>net user &#x2F;domain</p>
+</blockquote>
+<ul>
+<li>获取域内用户的详细信息：</li>
+</ul>
+<blockquote>
+<p>wmic useraccount get &#x2F;all</p>
+<p>可以获取到用户名，描述信息，SID域名等</p>
+</blockquote>
+<ul>
+<li>查看存在的用户：</li>
+</ul>
+<blockquote>
+<p>dsquery user</p>
+</blockquote>
+<ul>
+<li>查询本地管理员组用户：</li>
+</ul>
+<blockquote>
+<p>net localgroup administrators</p>
+</blockquote>
+<ul>
+<li>查询域管理员用户组：</li>
+</ul>
+<blockquote>
+<p>net group “domain admins” &#x2F;domain</p>
+</blockquote>
+<ul>
+<li>查询管理员用户组：</li>
+</ul>
+<blockquote>
+<p>net group “Enterprise Admins” &#x2F;domain</p>
+</blockquote>
+<h5 id="定位域管理员"><a href="#定位域管理员" class="headerlink" title="定位域管理员"></a>定位域管理员</h5><p>常规渠道有二个，日志与会话，日志是本地机器的管理员日志，可以用脚本或者内置应用wevtutil导出来看。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim">工具：<br>psloggedon.<span class="hljs-keyword">exe</span>，netview.<span class="hljs-keyword">exe</span>，PVEFindADUser.<span class="hljs-keyword">exe</span>，powersploit的PowerView脚本，Empire的user_hunter模块等。<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="查找域管理进程"><a href="#查找域管理进程" class="headerlink" title="查找域管理进程"></a>查找域管理进程</h5><ul>
+<li>本机检查：</li>
+</ul>
+<blockquote>
+<p>net group “Domain Admins” &#x2F;domain<br>列出本机的所有进程及进程用户：tasklist   &#x2F;v</p>
+<p>ps: 在以上进程中尽量查找域管理员进程或是与其相关的进程</p>
+</blockquote>
+<h5 id="查询域控的域用户会话"><a href="#查询域控的域用户会话" class="headerlink" title="查询域控的域用户会话"></a>查询域控的域用户会话</h5><ul>
+<li>查询域控制器列表：</li>
+</ul>
+<blockquote>
+<p>net group “Domain Controllers” &#x2F;domain</p>
+</blockquote>
+<ul>
+<li>收集域管理员列表：</li>
+</ul>
+<blockquote>
+<p>net group “Domain admins” &#x2F;domain</p>
+</blockquote>
+<ul>
+<li>收集所有活动域的会话列表：</li>
+</ul>
+<blockquote>
+<p>NetSess -h，使用的是<a target="_blank" rel="noopener" href="http://www.joeware.net/freetools/tools/netsess/index.htm">NetSess.exe</a></p>
+</blockquote>
+<h5 id="利用powershell收集域信息"><a href="#利用powershell收集域信息" class="headerlink" title="利用powershell收集域信息"></a>利用powershell收集域信息</h5><ul>
+<li>首先要将powershell的权限限制更改为RemoteSigned，才可以执行本地上的脚本:</li>
+</ul>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mathematica">输入：<span class="hljs-built_in">Get</span><span class="hljs-operator">-</span><span class="hljs-variable">ExecutionPolicy</span>，不是<span class="hljs-variable">RemoteSigned</span>权限，输入：<span class="hljs-built_in">Set</span><span class="hljs-operator">-</span><span class="hljs-variable">ExecutionPolicy</span> <span class="hljs-variable">RemoteSigned</span>，按<span class="hljs-variable">Y</span>确定即可，在本地虚拟机测试时还可以将脚本权限改为<span class="hljs-variable">Unrestricter</span>，这样可以执行来自网络与本地的任何脚本。<br><br>使用脚本在<span class="hljs-variable">PowerSploit</span><span class="hljs-operator">/</span><span class="hljs-variable">Recon</span>中，将要用到的<span class="hljs-variable">PowerView</span><span class="hljs-operator">.</span><span class="hljs-variable">ps1</span>传入靶机，在<span class="hljs-variable">powershell</span>中打开该脚本目录并导入：<span class="hljs-built_in">Import</span><span class="hljs-operator">-</span><span class="hljs-built_in">Module</span> <span class="hljs-operator">.</span>\<span class="hljs-variable">PowerView</span><span class="hljs-operator">.</span><span class="hljs-variable">ps1</span>就可以进行收集。<br><br>具体命令的相关用法在<span class="hljs-variable">PowerSploit</span><span class="hljs-operator">/</span><span class="hljs-variable">Recon</span><span class="hljs-operator">/</span><span class="hljs-variable">READE</span><span class="hljs-operator">.</span><span class="hljs-variable">md</span>中<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>总结：这里还不够完善，不断补充和完善</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" class="category-chain-item">命令大全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%86%85%E7%BD%91/">#内网</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/11/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95tools%E5%A4%A7%E5%85%A8/" title="渗透测试 —— Tools大全">
+                        <span class="hidden-mobile">渗透测试 —— Tools大全</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span> © 2023 </span> <a href="https://b11c.github.io" target="_blank" rel="nofollow noopener"><span>b11c</span></a> <span>Powered by</span> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+<span> & </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
